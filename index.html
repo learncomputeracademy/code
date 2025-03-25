@@ -1,1 +1,136 @@
-sdfsdf
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCA Play Ground - Web Playground</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/theme/monokai.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="logo-section">
+                <h1>LCA Play Ground</h1>
+                <span class="tagline">Web Playground</span>
+            </div>
+            <nav class="action-controls">
+                <button class="btn btn-primary" id="run-code">Run</button>
+                <button class="btn btn-secondary" id="save-project">Save</button>
+                <button class="btn btn-secondary" id="download-project">Download</button>
+                <button class="btn btn-accent" id="new-project">New</button>
+                <button class="btn btn-secondary" id="settings-btn">Settings</button>
+                <button class="btn btn-secondary" id="projects-btn">Projects</button>
+            </nav>
+        </header>
+
+        <main class="workspace">
+            <section class="editor-section">
+                <div class="editor-container" data-language="html">
+                    <div class="editor-header">
+                        <span>HTML</span>
+                        <div class="language-hints">
+                            <span>Tip: Use Emmet expansions</span>
+                        </div>
+                    </div>
+                    <textarea id="html-editor" placeholder="Write your HTML here..."></textarea>
+                </div>
+                <div class="editor-container" data-language="css">
+                    <div class="editor-header">
+                        <span>CSS</span>
+                        <div class="language-hints">
+                            <span>Pro tip: Try flexbox, grid!</span>
+                        </div>
+                    </div>
+                    <textarea id="css-editor" placeholder="Style your webpage..."></textarea>
+                </div>
+                <div class="editor-container" data-language="javascript">
+                    <div class="editor-header">
+                        <span>JavaScript</span>
+                        <div class="language-hints">
+                            <span>Experiment & learn!</span>
+                        </div>
+                    </div>
+                    <textarea id="js-editor" placeholder="Add interactivity..."></textarea>
+                </div>
+            </section>
+            <div class="resizer" id="resizer"></div>
+            <section class="output-section">
+                <div class="output-controls">
+                    <div class="output-tabs">
+                        <button class="tab-btn active" data-target="preview">Preview</button>
+                        <button class="tab-btn" data-target="console">Console</button>
+                    </div>
+                    <div class="view-options">
+                        <button class="btn btn-secondary" id="fullscreen-toggle">Fullscreen</button>
+                    </div>
+                </div>
+                <div class="output-display">
+                    <iframe id="live-preview" class="output-frame"></iframe>
+                    <div id="console-log" class="console-output" style="display: none;"></div>
+                </div>
+            </section>
+        </main>
+
+        <div class="modals" id="projects-modal" style="display: none;">
+            <div class="modal-content">
+                <h2>Saved Projects</h2>
+                <ul id="project-list"></ul>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="close-projects">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modals" id="settings-modal" style="display: none;">
+            <div class="modal-content">
+                <h2>Playground Settings</h2>
+                <form class="settings-form">
+                    <div class="setting-group">
+                        <label for="theme-select">Color Theme</label>
+                        <select id="theme-select">
+                            <option value="dark">Dark Mode</option>
+                            <option value="light">Light Mode</option>
+                            <option value="ocean">Ocean Blue</option>
+                            <option value="sunset">Sunset</option>
+                        </select>
+                    </div>
+                    <div class="setting-group">
+                        <label for="font-size">Editor Font Size</label>
+                        <input type="range" id="font-size" min="12" max="24" value="16">
+                    </div>
+                    <div class="setting-group toggle-group">
+                        <label for="auto-run">Auto-Run Code</label>
+                        <input type="checkbox" id="auto-run" checked>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-primary" id="save-settings">Save</button>
+                        <button type="button" class="btn btn-secondary" id="close-settings">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/addon/hint/show-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/addon/hint/css-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/addon/hint/javascript-hint.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        window.RobotBlockerConfig = {
+            noIndex: true,
+            noFollowLinks: true,
+            blockBots: true,
+            blockRightClick: false,
+            blockSelection: false
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/amartadey/robotBlocker@latest/robotBlocker.js"></script>
+</body>
+</html>
