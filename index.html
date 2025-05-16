@@ -40,7 +40,7 @@
 </head>
 <body>
     <div class="announcement-bar">
-        Our main LCA Code Editor is undergoing daily maintenance. It will be back in <span class="countdown" id="maintenance-countdown" style="Color:#10B981; width:70px">calculating...</span>
+        Our main LCA Code Editor is undergoing daily maintenance. It will be back in <span class="countdown" id="maintenance-countdown" style="Color:#10B981; width:70px">calculating...</span> Meanwhile, you can use the Lite Version.
     </div>
     <div class="app-container">
         <header class="app-header">
@@ -163,6 +163,7 @@
             blockSelection: false
         };
     </script>
+    <script src="https://cdn.jsdelivr.net/gh/amartadey/robotBlocker@latest/robotBlocker.js"></script>
      <script>
         // Countdown timer function for maintenance announcement
         function updateMaintenanceCountdown() {
@@ -229,23 +230,13 @@
             updateMaintenanceCountdown();
             
             // Original initialization code will be called here
-            try {
-                new LCAPlayGround();
-            } catch (error) {
-                console.error('Failed to initialize LCA Play Ground:', error);
-            }
+            // try {
+            //     new LCAPlayGround();
+            // } catch (error) {
+            //     console.error('Failed to initialize LCA Play Ground:', error);
+            // }
         });
     </script>
-    <script src="script.js"></script>
-    <script>
-        window.RobotBlockerConfig = {
-            noIndex: true,
-            noFollowLinks: true,
-            blockBots: true,
-            blockRightClick: false,
-            blockSelection: false
-        };
-    </script>
-    <script src="https://cdn.jsdelivr.net/gh/amartadey/robotBlocker@latest/robotBlocker.js"></script>
+    
 </body>
 </html>
