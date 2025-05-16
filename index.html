@@ -8,8 +8,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/theme/monokai.min.css">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Announcement Bar Styles */
+        .announcement-bar {
+            background-color: #4338ca;
+            color: white;
+            text-align: center;
+            padding: 8px 0;
+            font-size: 14px;
+            position: relative;
+            z-index: 100;
+        }
+        
+        .announcement-bar a {
+            color: white;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        
+        .countdown {
+            font-weight: bold;
+            display: inline-block;
+            margin-left: 5px;
+        }
+        
+        /* Adjust app container to account for the announcement bar */
+        .app-container {
+            height: calc(100vh - 36px);
+        }
+    </style>
 </head>
 <body>
+    <div class="announcement-bar">
+        Our main LCA Code Editor is undergoing daily maintenance. It will be back in <span class="countdown" id="maintenance-countdown" style="Color:#10B981; width:70px">calculating...</span>
+    </div>
     <div class="app-container">
         <header class="app-header">
             <div class="logo-section">
@@ -121,6 +153,89 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/addon/hint/css-hint.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/addon/hint/javascript-hint.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        window.RobotBlockerConfig = {
+            noIndex: true,
+            noFollowLinks: true,
+            blockBots: true,
+            blockRightClick: false,
+            blockSelection: false
+        };
+    </script>
+     <script>
+        // Countdown timer function for maintenance announcement
+        function updateMaintenanceCountdown() {
+            const countdownElement = document.getElementById('maintenance-countdown');
+            
+            // Function to calculate time remaining until 10:30 AM IST
+            function getTimeUntil1030IST() {
+                // Get current time in UTC
+                const now = new Date();
+                
+                // Calculate the next 10:30 AM IST
+                // IST is UTC+5:30
+                let targetTime = new Date(now);
+                
+                // Set to 10:30 AM IST (which is 5 hours ahead of UTC)
+                targetTime.setUTCHours(5, 0, 0, 0); // 5:00 AM UTC = 10:30 AM IST
+                targetTime.setUTCMinutes(0);
+                
+                // If current time is past 10:30 AM IST, set to next day
+                if (now >= targetTime) {
+                    targetTime.setUTCDate(targetTime.getUTCDate() + 1);
+                }
+                
+                // Calculate time difference in milliseconds
+                const diff = targetTime - now;
+                
+                // Convert to hours, minutes, seconds
+                const hours = Math.floor(diff / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                return {
+                    hours: hours,
+                    minutes: minutes,
+                    seconds: seconds,
+                    total: diff
+                };
+            }
+            
+            // Update the countdown display
+            function updateCountdown() {
+                const t = getTimeUntil1030IST();
+                
+                countdownElement.innerHTML = 
+                    (t.hours < 10 ? '0' + t.hours : t.hours) + ':' +
+                    (t.minutes < 10 ? '0' + t.minutes : t.minutes) + ':' +
+                    (t.seconds < 10 ? '0' + t.seconds : t.seconds);
+                
+                if (t.total <= 0) {
+                    clearInterval(timeInterval);
+                    countdownElement.innerHTML = "now!";
+                }
+            }
+            
+            // Initial update
+            updateCountdown();
+            
+            // Update every second
+            const timeInterval = setInterval(updateCountdown, 1000);
+        }
+        
+        // Call the countdown function when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMaintenanceCountdown();
+            
+            // Original initialization code will be called here
+            try {
+                new LCAPlayGround();
+            } catch (error) {
+                console.error('Failed to initialize LCA Play Ground:', error);
+            }
+        });
+    </script>
     <script src="script.js"></script>
     <script>
         window.RobotBlockerConfig = {
