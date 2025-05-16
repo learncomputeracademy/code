@@ -40,7 +40,7 @@
 </head>
 <body>
     <div class="announcement-bar">
-        Our main LCA Code Editor is undergoing daily maintenance. It will be back in <span class="countdown" id="maintenance-countdown" style="Color:#10B981; width:70px">calculating...</span> Meanwhile, you can use the Lite Version.
+        Our main LCA Code Editor is undergoing daily maintenance. It will be back in <span class="countdown" id="maintenance-countdown" style="Color:#10B981; width:145px">calculating...</span> Meanwhile, you can use the Lite Version.
     </div>
     <div class="app-container">
         <header class="app-header">
@@ -208,9 +208,9 @@
                 const t = getTimeUntil1030IST();
                 
                 countdownElement.innerHTML = 
-                    (t.hours < 10 ? '0' + t.hours : t.hours) + 'hr:' +
-                    (t.minutes < 10 ? '0' + t.minutes : t.minutes) + 'min:' +
-                    (t.seconds < 10 ? '0' + t.seconds : t.seconds)+ 'sec';
+                    (t.hours < 10 ? '0' + t.hours : t.hours) + ' hr:' +
+                    (t.minutes < 10 ? '0' + t.minutes : t.minutes) + ' min:' +
+                    (t.seconds < 10 ? '0' + t.seconds : t.seconds)+ ' sec';
                 
                 if (t.total <= 0) {
                     clearInterval(timeInterval);
